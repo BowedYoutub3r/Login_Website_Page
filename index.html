@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+
+<style>
+    @keyframes backgroundChange {
+        0% { opacity: 1; }
+        45% { opacity: 1; }
+        55% { opacity: 0; }
+        100% { opacity: 0; }
+    }
+
+    .backgrounds {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+        animation: backgroundChange 60s infinite;
+        z-index: -1;
+    }
+
+    .backgrounds:nth-child(2) {
+        animation-delay: -30s;
+    }
+
+    body {
+        background-color: transparent;
+    }
+
+    .signup-text {
+        margin-top: 15px;
+        font-size: 0.9em;
+        text-align: center;
+    }
+
+    .signup-link {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    .signup-link:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<script>
+    const imgs = [];
+
+    function loadimgs() {
+        return fetch('backgrounds.txt')
+            .then(response => response.text())
+            .then(data => {
+                imgs.push(...data.split('\n').filter(link => link.trim() !== ''));
+            })
+            .catch(error => {
+                console.error('Error loading space images:', error);
+                // Use a default image if the fetch fails
+               // Feel free to change it to something else
+                imgs.push('https://static.vecteezy.com/system/resources/thumbnails/008/255/803/small/page-not-found-error-404-system-updates-uploading-computing-operation-installation-programs-system-maintenance-a-hand-drawn-layout-template-of-a-broken-robot-illustration-vector.jpg');
+            });
+    }
+
+    function setRandomBackground() {
+        if (imgs.length === 0) {
+            console.warn('No space images available');
+            return;
+        }
+        const backgrounds = document.querySelectorAll('.backgrounds');
+        backgrounds.forEach((bg) => {
+            const randomIndex = Math.floor(Math.random() * imgs.length);
+            bg.style.backgroundImage = `url(${imgs[randomIndex]})`;
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const body = document.body;
+        body.insertAdjacentHTML('afterbegin', '<div class="backgrounds"></div><div class="backgrounds"></div>');
+        
+        loadimgs().then(() => {
+            setRandomBackground();
+            setInterval(setRandomBackground, 60000);
+        });
+    });
+</script>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f000;
+        }
+        .login-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .login-form input {
+            margin: 10px 0;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            width: 100%;
+        }
+        .login-form button {
+            margin-top: 10px;
+            padding: 5px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <form class="login-form">
+            <h2>Login</h2>
+            <input type="text" placeholder="Username" required>
+            <input type="password" placeholder="Password" required>
+            <button type="submit">Log In</button>
+            <p class="signup-text">Need an account? <a href="#" class="signup-link">Sign up here</a></p>
+        </form>
+    </div>
+</body>
+</html>
