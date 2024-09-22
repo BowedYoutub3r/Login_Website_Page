@@ -1,2 +1,3 @@
 # Website-101
-Website built with only one html file. with features
+Website built using only one html file. with features.
+
