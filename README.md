@@ -5,4 +5,4 @@ Website built using only one html file. with features.
 
 This website cycles through viewable content links and also leaves a short transition during so which helps prevent the sudden change of light and pixels.
 
-You can view examples at: 
+You can view examples at: https://github.com/BowedYoutub3r/Login_Website_Page/blob/main/examples.md
